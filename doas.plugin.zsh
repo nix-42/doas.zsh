@@ -25,16 +25,16 @@ doas-command-line() {
     if [[ -n "$EDITOR" ]]; then
         local cmd="${${(Az)BUFFER}[1]}"
         if [[ "${aliases[$cmd]} " = (\$EDITOR|$EDITOR)\ * ]]; then
-            local EDITOR="$(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
+            local EDITOR="$cmd"
         fi
     fi
 
     if [[ -n $EDITOR && $BUFFER = $EDITOR\ * ]]; then
-        __doas-replace-buffer "$EDITOR" "doas $EDITOR"
+        __doas-replace-buffer "$EDITOR" "doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
     elif [[ -n $EDITOR && $BUFFER = \$EDITOR\ * ]]; then
-        __doas-replace-buffer "\$EDITOR" "doas $EDITOR"
+        __doas-replace-buffer "\$EDITOR" "doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
     elif [[ $BUFFER = "doas $EDITOR"\ * ]]; then
-        __doas-replace-buffer "doas $EDITOR" "$EDITOR"
+        __doas-replace-buffer "doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")" "$EDITOR"
     elif [[ $BUFFER = doas\ * ]]; then
         __doas-replace-buffer "doas" ""
     else
