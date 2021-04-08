@@ -29,12 +29,13 @@ doas-command-line() {
         fi
     fi
 
+    doasedit="doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
     if [[ -n $EDITOR && $BUFFER = $EDITOR\ * ]]; then
-        __doas-replace-buffer "$EDITOR" "doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
+        __doas-replace-buffer "$EDITOR" "$doasedit"
     elif [[ -n $EDITOR && $BUFFER = \$EDITOR\ * ]]; then
-        __doas-replace-buffer "\$EDITOR" "doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
+        __doas-replace-buffer "\$EDITOR" "$doasedit"
     elif [[ $BUFFER = "doas $EDITOR"\ * ]]; then
-        __doas-replace-buffer "doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")" "$EDITOR"
+        __doas-replace-buffer "$doasedit" "$EDITOR"
     elif [[ $BUFFER = doas\ * ]]; then
         __doas-replace-buffer "doas" ""
     else
