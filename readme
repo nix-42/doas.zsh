@@ -1,7 +1,3 @@
 Installation
 
     $ git clone https://github.com/monesonn/doas.zsh.git $HOME/.oh-my-zsh/custom/plugins/doas
-
-WIP
-
-    - doasedit
