@@ -1,5 +1,5 @@
 # author: monesonn <git.io/monesonn>
-# description: doas or doasedit before the command; triggered by double esc
+# description: doas before the command; triggered by double esc.
 # credit: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/doas/doas.plugin.zsh
 
 __doas-replace-buffer() {
@@ -14,39 +14,34 @@ __doas-replace-buffer() {
 
 doas-command-line() {
     [[ -z $BUFFER ]] && LBUFFER="$(fc -ln -1)"
-    # Save beginning space
+    # save beginning space
     local WHITESPACE=""
     if [[ ${LBUFFER:0:1} = " " ]]; then
         WHITESPACE=" "
         LBUFFER="${LBUFFER:1}"
     fi
-    # Get the first part of the typed command and check if it's an alias to $EDITOR
-    # If so, locally change $EDITOR to the alias so that it matches below
-    if [[ -n "$EDITOR" ]]; then
-        local cmd="${${(Az)BUFFER}[1]}"
-        if [[ "${aliases[$cmd]} " = (\$EDITOR|$EDITOR)\ * ]]; then
-            local EDITOR="$cmd"
-        fi
-    fi
-
+    # get the first part of the typed command
+    local cmd="${${(Az)BUFFER}[1]}"
+    # convert if alias
     doasedit="doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
-    if [[ -n $EDITOR && $BUFFER = $EDITOR\ * ]]; then
-        __doas-replace-buffer "$EDITOR" "$doasedit"
-    elif [[ -n $EDITOR && $BUFFER = \$EDITOR\ * ]]; then
-        __doas-replace-buffer "\$EDITOR" "$doasedit"
-    elif [[ $BUFFER = "doas $EDITOR"\ * ]]; then
-        __doas-replace-buffer "$doasedit" "$EDITOR"
+
+    if [[ -n $cmd && $BUFFER = $cmd\ * ]]; then
+        __doas-replace-buffer "$cmd" "$doasedit"
+    elif [[ -n $cmd && $BUFFER = \$cmd\ * ]]; then
+        __doas-replace-buffer "\$cmd" "$doasedit"
+    elif [[ $BUFFER = "doas $cmd"\ * ]]; then
+        __doas-replace-buffer "$doasedit" "$cmd"
     elif [[ $BUFFER = doas\ * ]]; then
         __doas-replace-buffer "doas" ""
     else
         LBUFFER="doas $LBUFFER"
     fi
-    # Preserve beginning space
+    # preserve beginning space
     LBUFFER="${WHITESPACE}${LBUFFER}"
 }
 
 zle -N doas-command-line
-# Defined shortcut keys: [Esc] [Esc]
+# defined shortcut keys: [esc] [esc]
 bindkey -M emacs '\e\e' doas-command-line
 bindkey -M vicmd '\e\e' doas-command-line
 bindkey -M viins '\e\e' doas-command-line
