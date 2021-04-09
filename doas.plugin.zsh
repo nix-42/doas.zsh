@@ -1,6 +1,6 @@
 # author: monesonn <git.io/monesonn>
 # description: doas before the command; triggered by double esc.
-# credit: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/doas/doas.plugin.zsh
+# credit: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/sudo.plugin.zsh
 
 __doas-replace-buffer() {
     local old=$1 new=$2 space=${2:+ }
