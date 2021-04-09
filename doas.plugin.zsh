@@ -22,15 +22,15 @@ doas-command-line() {
     fi
     # get the first part of the typed command
     local cmd="${${(Az)BUFFER}[1]}"
-    # convert if alias
-    doasedit="doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")"
-
+    # check if alias
+    [[ -n $(alias $cmd) ]] && doas_cmd="doas $(alias $cmd | sed -r "s/.*='(.*)'/\1/;s/.*=(.*)/\1/")" || doas_cmd="doas $cmd"
+    # replace buffer
     if [[ -n $cmd && $BUFFER = $cmd\ * ]]; then
-        __doas-replace-buffer "$cmd" "$doasedit"
+        __doas-replace-buffer "$cmd" "$doas_cmd"
     elif [[ -n $cmd && $BUFFER = \$cmd\ * ]]; then
-        __doas-replace-buffer "\$cmd" "$doasedit"
+        __doas-replace-buffer "\$cmd" "$doas_cmd"
     elif [[ $BUFFER = "doas $cmd"\ * ]]; then
-        __doas-replace-buffer "$doasedit" "$cmd"
+        __doas-replace-buffer "$doas_cmd" "$cmd"
     elif [[ $BUFFER = doas\ * ]]; then
         __doas-replace-buffer "doas" ""
     else
