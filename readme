@@ -5,7 +5,7 @@ Plugin for zsh, that binds double escape to add doas before the command. Works w
 Installation
 ------------
 oh-my-zsh: 
-    $ git clone https://github.com/monesonn/doas.zsh.git $HOME/.oh-my-zsh/custom/plugins/doas
+    $ git clone https://github.com/monesonn/doas.zsh.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/doas
     Then type doas in .zshrc' plugins section -> plugins ( doas )
     
 Usage 
