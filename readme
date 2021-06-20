@@ -8,9 +8,13 @@ oh-my-zsh:
     $ git clone https://github.com/monesonn/doas.zsh.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/doas
     Then type doas in .zshrc' plugins section -> plugins ( doas )
     
-Usage 
------    
+Usage
+-----
 It's works for current typed command and previous failed excecuted commands:    
     $ some command
 By pressing the [Ecs] twice, you'll have the same command with doas prefixed:
     $ doas some command
+
+Dependencies
+------------
+doasedit - http://git.io/doasedit (optional) 
