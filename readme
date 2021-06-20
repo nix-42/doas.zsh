@@ -1,9 +1,14 @@
+     __                       __ 
+ ___/ /__  ___ ____  ___ ___ / / 
+/ _  / _ \/ _ `(_-<_/_ /(_-</ _ \
+\_,_/\___/\_,_/___(_)__/___/_//_/
+
 doas.zsh
-========
+=====
 Plugin for zsh, that binds double escape to add doas before the command. Works with aliases. 
 
 Installation
-------------
+-----
 oh-my-zsh: 
     $ git clone https://github.com/monesonn/doas.zsh.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/doas
     Then type doas in .zshrc' plugins section -> plugins ( doas )
@@ -16,5 +21,5 @@ By pressing the [Ecs] twice, you'll have the same command with doas prefixed:
     $ doas some command
 
 Dependencies
-------------
+-----
 doasedit - http://git.io/doasedit (optional) 
